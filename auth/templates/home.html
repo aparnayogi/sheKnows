@@ -1,0 +1,48 @@
+{% extends 'Header.html' %}
+{% include 'base.html' %}
+{% block title %}Home - SheKnows{% endblock %}
+
+{% block content %}
+
+<body>
+    <div class="home-container">
+        <!-- Quote Section -->
+        <div id="quote-section">
+            <div id="quote" class="quote">Loading quote...</div>
+            <div id="author" class="author"></div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1>Welcome to SheKnows</h1>
+            <p>Your one-stop platform for empowering women with knowledge, resources, and opportunities.</p>
+            <!-- <img src="{{ url_for('static', filename='images/home-banner.jpg') }}" alt="Empowering Women"> -->
+            <!-- <button class="explore-btn">Explore More</button> -->
+        </div>
+    
+    
+    <script>
+        // Function to fetch quote from the local Flask API
+        async function fetchQuote() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/get-quote');  // Replace with your local IP address
+                const data = await response.json();
+                // Display the quote and author on the page
+                document.getElementById('quote').innerText = `"${data.quote}"`;
+                document.getElementById('author').innerText = `- ${data.author}`;
+            } catch (error) {
+                console.error('Error fetching quote:', error);
+                // Handle error in fetching quote
+                document.getElementById('quote').innerText = "Failed to load quote.";
+                document.getElementById('author').innerText = "";
+            }
+        }
+
+        // Fetch the quote when the page loads
+        fetchQuote();
+
+    </script>
+
+</body>
+
+{% endblock %}

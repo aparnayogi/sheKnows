@@ -1,0 +1,59 @@
+{% extends 'Header.html' %}
+{% include 'base.html' %}
+
+{% block title %}Mental Health{% endblock %}
+
+{% block content %}
+<h1>Mental Health Resources</h1>
+<p>Your mental well-being matters. Here, you'll find tools, resources, and support to help you thrive.</p>
+
+<header>
+    <h1>Mental Health Resources for Women</h1>
+</header>
+<div class="container">
+    <div class="search-bar">
+        <input type="text" id="searchQuery" placeholder="Search articles (e.g., anxiety, stress)">
+        <button onclick="fetchArticles()">Search</button>
+    </div>
+    <div id="articlesContainer" class="articles">
+        Articles will be dynamically injected here
+    </div>
+</div>
+<script>
+    async function fetchArticles() {
+        const query = document.getElementById("searchQuery").value || "mental health women India";
+        const articlesContainer = document.getElementById("articlesContainer");
+        articlesContainer.innerHTML = "<p>Loading articles...</p>";
+
+        try {
+            const response = await fetch(`/articles?query=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            if (data.articles && data.articles.length > 0) {
+                articlesContainer.innerHTML = "";
+                data.articles.forEach(article => {
+                    const articleDiv = document.createElement("div");
+                    articleDiv.className = "article";
+                    articleDiv.innerHTML = `
+                        <h2>${article.title}</h2>
+                        <p>${article.description || "No description available."}</p>
+                        <p><strong>Source:</strong> ${article.source}</p>
+                        <p><strong>Published:</strong> ${new Date(article.publishedAt).toLocaleDateString()}</p>
+                        <a href="${article.url}" target="_blank">Read More</a>
+                    `;
+                    articlesContainer.appendChild(articleDiv);
+                });
+            } else {
+                articlesContainer.innerHTML = "<p>No articles found. Try a different search term.</p>";
+            }
+        } catch (error) {
+            console.error("Error fetching articles:", error);
+            articlesContainer.innerHTML = "<p>Failed to fetch articles. Please try again later.</p>";
+        }
+    }
+
+    // Fetch default articles on page load
+    fetchArticles();
+</script>
+
+{% endblock %}
+

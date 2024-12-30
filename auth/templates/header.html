@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>She Knows</title>
+    
+    <!-- Stylesheets -->
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/open_source/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/open_source/dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/open_source/jquery-ui.css') }}" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/open_source/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/open_source/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/open_source/dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/open_source/plotly-2.32.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/open_source/jquery-ui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/open_source/jspdf.umd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/open_source/jspdf.plugin.autotable.min.js') }}"></script>
+</head>
+<body>
+    <div>
+        {% block head %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

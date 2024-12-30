@@ -1,0 +1,87 @@
+{% extends 'Header.html' %}
+{% include 'base.html' %}
+
+{% block content %}
+<div class="maincomponent">
+    <ul id="tabs">
+        <li><a id="userRegistrationTab">User SignUp</a></li>
+        <li><a id="userLoginTab" class="inactive">User Login</a></li>
+    </ul>
+
+    <!-- User Sign-Up Section -->
+    <div id="User_SignUp" class="container">
+        <label class="UserSignUpLabel">User SignUp</label>
+        <div class="col-sm-12 row inputrow">
+            <div class="col-sm-5 row" style="margin-left: 30px;">
+                <label class="registrationLabel" for="userFirstName">First Name: </label>
+                <input type="text" id="userFirstName" class="userinputprop" name="first_name" required>
+            </div>
+            <div class="col-sm-5 row" style="margin-left: 30px;">
+                <label class="registrationLabel" for="userLastName">Last Name: </label>
+                <input type="text" id="userLastName" class="userinputprop" name="last_name" required>
+            </div>
+        </div>
+        <div class="col-sm-12 row inputrow" id="emailAndMob">
+            <div class="col-sm-5 row" style="margin-left: 30px;">
+                <label class="registrationLabel" for="userEmail">Email: </label>
+                <input type="email" id="userEmail" class="userinputprop" name="email" required>
+            </div>
+            <div class="col-sm-5 row" style="margin-left: 30px;">
+                <label class="registrationLabel" for="userMobileNo">Mobile No: </label>
+                <input type="tel" id="userMobileNo" class="userinputprop" name="phone_no" pattern="[0-9]{10}" required>
+            </div>
+        </div>
+        <div class="col-sm-12 row inputrow">
+            <div class="col-sm-5 row" style="margin-left: 30px;">
+                <label class="registrationLabel" for="userPassword">Password: </label>
+                <input type="password" id="userPassword" class="userinputprop" name="password" required>
+            </div>
+            <div class="col-sm-5 row" style="margin-left: 30px;">
+                <label class="registrationLabel" for="userCity">City: </label>
+                <input type="text" id="userCity" class="userinputprop" name="city" required>
+            </div>
+
+            
+        </div>
+        <div>
+            <button id="registrationSubmit">Submit</button>
+        </div>
+    </div>
+
+    <!-- User Login Section -->
+    <div id="userLoginTabContainer" class="container">
+        <div id="loginMainContainer">
+            <div class="userinput row">
+                <label class="labelProp" for="userLoginEmail">Email:</label>
+                <input type="email" id="userLoginEmail" name="login_email" required>
+            </div>
+            <div class="userinput row">
+                <label class="labelProp" for="userLoginPassword">Password:</label>
+                <input type="password" id="userLoginPassword" name="login_password" required>
+            </div>
+            <button id="loginSubmit">Submit</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        register_login_events();
+        // $('#tabs li a:not(:first)').addClass('inactive');
+        // $('.container').hide();
+        // $('.container:first').show();
+
+        // // Initialize datepicker for date inputs
+        // $("#dobDate, #endDate, #admisssionDate").datepicker({
+        //     dateFormat: 'yy-mm-dd',
+        //     changeMonth: true,
+        //     changeYear: true
+        // });
+
+        // get_students_data();
+        // get_department_data();
+        // get_studying_year_data();
+        // handleLoginTypeChange();
+    });
+</script>
+{% endblock %}
