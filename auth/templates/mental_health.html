@@ -1,24 +1,88 @@
 {% extends 'Header.html' %}
 {% include 'base.html' %}
 
-{% block title %}Mental Health{% endblock %}
+{% block title %}Mental Health Resources{% endblock %}
 
 {% block content %}
-<h1>Mental Health Resources</h1>
-<p>Your mental well-being matters. Here, you'll find tools, resources, and support to help you thrive.</p>
+<div class="page-container">
+    <header class="header-section">
+        <h1>Mental Health Resources for Women</h1>
+        <p>Providing access to crucial resources for mental health and well-being.</p>
+    </header>
 
-<header>
-    <h1>Mental Health Resources for Women</h1>
-</header>
-<div class="container">
-    <div class="search-bar">
-        <input type="text" id="searchQuery" placeholder="Search articles (e.g., anxiety, stress)">
-        <button onclick="fetchArticles()">Search</button>
-    </div>
-    <div id="articlesContainer" class="articles">
-        Articles will be dynamically injected here
-    </div>
-</div>
+    <section class="breathing-exercise">
+        <h2>Guided Breathing Exercise</h2>
+        <p>Follow the animation below to relax. Breathe in as the circle expands and out as it contracts.</p>
+        <div class="circle"></div>
+    </section>
+    
+
+    <section class="helpline-section">
+        <h2>Emergency Helpline Numbers</h2>
+        <p>If you or someone you know needs support, reach out to these trusted helplines:</p>
+        <div class="helpline-cards">
+            <div class="helpline-card">
+                <h3>Women’s Helpline</h3>
+                <p><strong>Number:</strong> 181</p>
+                <p>Support for women in distress, including domestic violence and harassment.</p>
+            </div>
+            <div class="helpline-card">
+                <h3>Police (Women’s Cell)</h3>
+                <p><strong>Number:</strong> 1091</p>
+                <p>Dedicated assistance for women facing emergencies or violence.</p>
+            </div>
+            <div class="helpline-card">
+                <h3>National Mental Health Helpline</h3>
+                <p><strong>Number:</strong> 080 4611 0007</p>
+                <p>Support for mental health issues and emotional crises.</p>
+            </div>
+            <div class="helpline-card">
+                <h3>Childline India Foundation</h3>
+                <p><strong>Number:</strong> 1098</p>
+                <p>Support for children and women facing abuse or distress. <a href="https://www.childlineindia.org/" target="_blank">Visit Website</a></p>
+            </div>
+            <div class="helpline-card">
+                <h3>SAARTHAK (For Domestic Violence)</h3>
+                <p><strong>Number:</strong> +91 935 092 1282</p>
+                <p>24/7 helpline for domestic violence victims. <a href="https://www.saarthak.org/" target="_blank">Visit Website</a></p>
+            </div>
+            <div class="helpline-card">
+                <h3>iCall Mental Health Support</h3>
+                <p><strong>Number:</strong> +91 915 298 7821</p>
+                <p>Free and confidential mental health counseling via phone and email. <a href="https://icallhelpline.org/" target="_blank">Visit Website</a></p>
+            </div>
+            <div class="helpline-card">
+                <h3>AASRA (Suicide Prevention)</h3>
+                <p><strong>Number:</strong> +91 982 046 6726</p>
+                <p>24/7 helpline for individuals facing emotional distress. <a href="https://www.aasra.info/" target="_blank">Visit Website</a></p>
+            </div>
+            <div class="helpline-card">
+                <h3>SNEHI</h3>
+                <p><strong>Number:</strong> +91 958 220 8181</p>
+                <p>Emotional support and counseling for individuals in need.</p>
+            </div>
+            <div class="helpline-card">
+                <h3>National Commission for Women (NCW)</h3>
+                <p><strong>Email:</strong> <a href="mailto:ncw@nic.in">ncw@nic.in</a></p>
+                <p>Legal advice and support for women facing harassment. <a href="https://ncw.nic.in/" target="_blank">Visit Website</a></p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Articles Section -->
+     <section class="articles-section">
+        <h2>Mental Health Articles</h2>
+        <p>Explore articles on mental health topics for women in India:</p>
+        <div class="search-bar">
+            <input type="text" id="searchQuery" placeholder="Search articles (e.g., anxiety, stress)">
+            <button onclick="fetchArticles()">Search</button>
+        </div>
+        <div id="articlesContainer" class="articles">
+            <!-- Articles will be dynamically injected here -->
+        </div>
+    </section>
+</div> 
+
 <script>
     async function fetchArticles() {
         const query = document.getElementById("searchQuery").value || "mental health women India";
@@ -32,12 +96,10 @@
                 articlesContainer.innerHTML = "";
                 data.articles.forEach(article => {
                     const articleDiv = document.createElement("div");
-                    articleDiv.className = "article";
+                    articleDiv.className = "article-card";
                     articleDiv.innerHTML = `
-                        <h2>${article.title}</h2>
+                        <h3>${article.title}</h3>
                         <p>${article.description || "No description available."}</p>
-                        <p><strong>Source:</strong> ${article.source}</p>
-                        <p><strong>Published:</strong> ${new Date(article.publishedAt).toLocaleDateString()}</p>
                         <a href="${article.url}" target="_blank">Read More</a>
                     `;
                     articlesContainer.appendChild(articleDiv);
@@ -53,7 +115,21 @@
 
     // Fetch default articles on page load
     fetchArticles();
-</script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const breathingExercise = document.querySelector('.breathing-exercise');
+        const instructions = document.createElement('p');
+        instructions.style.fontWeight = 'bold';
+        breathingExercise.appendChild(instructions);
+
+        const steps = ['Breathe In...', 'Hold...', 'Breathe Out...'];
+        let stepIndex = 0;
+
+        setInterval(() => {
+            instructions.textContent = steps[stepIndex];
+            stepIndex = (stepIndex + 1) % steps.length;
+        }, 4000); // Change instructions every 4 seconds
+    });
+</script> 
 
 {% endblock %}
-

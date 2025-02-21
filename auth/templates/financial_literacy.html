@@ -6,12 +6,60 @@
 
 {% block content %}
 
-<header>
-    <h1>Financial Literacy for Women in India</h1>
-</header>
+<body id="financial-literacy-page">
 
- <div class="container">
+  <header>
+      <h1>Financial Literacy for Women in India</h1>
+  </header>
+
+  <section id="resources-container">
+      <!-- Cards will be dynamically added here -->
+  </section>
+
+  <script>
+      // Sample Dataset
+      const dataset = [
+          {
+              "title": "How to Open a Bank Account",
+              "description": "Learn the process of opening a bank account, the required documents, and the benefits of having one.",
+              "link": "https://www.rbi.org.in/commonman/English/Scripts/FAQs.aspx"
+          },
+          {
+              "title": "Understanding Credit Scores",
+              "description": "Discover how credit scores impact your financial health and learn tips to improve them.",
+              "link": "https://www.cibil.com/credit-education"
+          },
+          {
+              "title": "Filing Income Tax Returns",
+              "description": "Step-by-step guide on filing income tax returns online in India.",
+              "link": "https://www.incometaxindia.gov.in/pages/tax-information-services.aspx"
+          },
+          {
+              "title": "Basics of Investing",
+              "description": "Understand the basics of mutual funds, stocks, and other investment opportunities.",
+              "link": "https://www.nseindia.com/learn/investor-education"
+          }
+      ];
+
+      // Dynamically Add Cards to Page
+      const container = document.getElementById('resources-container');
+
+      dataset.forEach(resource => {
+          const card = document.createElement('div');
+          card.className = 'resource-card';
+          card.innerHTML = `
+              <h3>${resource.title}</h3>
+              <p>${resource.description}</p>
+              <a href="${resource.link}" target="_blank">Learn More</a>
+          `;
+          container.appendChild(card);
+      });
+  </script>
+
+</body>
+ <!-- <div class="container">
     <h1>Introduction</h1>
+    <img src="/static/images/introduction.jpg" alt="Introduction Image" style="width:50%; height:auto; margin: 50px 0;">
     <p>
         According to the National Centre for Financial Education (NCFE), only 21% of women in India are financially literate, as compared to a 29% literacy rate among men. 
         This disparity highlights the urgent need to improve financial education for women in India. From managing daily expenses to planning for retirement, financial 
@@ -250,4 +298,29 @@
         
         
 </div>
+
+<script>
+    async function translateText(targetLanguage) {
+      const text = document.getElementById('text').textContent;
+
+      try {
+        const response = await fetch('https://libretranslate.com/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            q: text,
+            source: 'en',
+            target: targetLanguage,
+          }),
+        });
+
+        const data = await response.json();
+        const translatedText = data.translatedText;
+
+        document.getElementById('text').textContent = translatedText;
+      } catch (error) {
+        console.error('Error translating text:', error);
+      }
+    }
+  </script> -->
     {% endblock %} 

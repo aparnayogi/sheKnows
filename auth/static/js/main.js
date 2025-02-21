@@ -90,19 +90,3 @@ function verify_user_login(request_data){
     });
 }
 
-fetch('/api/stories')
-.then(response => response.json())
-.then(stories => {
-    const carousel = document.getElementById('story-carousel');
-    stories.forEach(story => {
-        const storyElement = `
-            <div class="carousel-item">
-                <img src="${story.image}" alt="${story.title}" class="carousel-image">
-                <h3>${story.title}</h3>
-                <p>${story.description}</p>
-                <a href="/story/${story.id}" class="btn">Read Full Story</a>
-            </div>`;
-        carousel.innerHTML += storyElement;
-    });
-})
-.catch(error => console.error('Error loading stories:', error));

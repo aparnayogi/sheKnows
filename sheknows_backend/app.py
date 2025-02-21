@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi import Request
 import json
+
+from flask import render_template, session
+from flask_login import logout_user
 import backend_db as fsd_db
 from typing import Dict
 from fastapi.responses import JSONResponse
@@ -20,6 +23,7 @@ def user_signup(signup_details:schemas.UserSignUp):
         "data" : result
     }
     return JSONResponse(content=response)
+     
 
 @app.post("/attempt_to_login_for_user")
 def attempt_to_login_for_user(login_data:schemas.LoginForUser):

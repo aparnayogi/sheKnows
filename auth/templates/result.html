@@ -1,0 +1,25 @@
+{% extends 'Header.html' %}
+{% block content %}
+<body>
+    <h2>Your Query: {{ query }}</h2>
+    <h3>Results:</h3>
+    {% if response.get('message') %}
+        <p>{{ response.get('message') }}</p>
+    {% else %}
+        <h4>Issue: {{ response.get('issue') }}</h4>
+        <h5>Rights:</h5>
+        <ul>
+            {% for right in response.get('rights') %}
+                <li>{{ right }}</li>
+            {% endfor %}
+        </ul>
+        <h5>Advice:</h5>
+        <ul>
+            {% for advice in response.get('advice') %}
+                <li>{{ advice }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+
+{% endblock %}

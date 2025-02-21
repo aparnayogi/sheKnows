@@ -4,48 +4,32 @@
 {% block title %}Government Schemes{% endblock %}
 
 {% block content %}
-<h1>Government Schemes</h1>
-<p>Explore various government schemes designed to support women in education, healthcare, and entrepreneurship.</p>
-<script>
-    // Function to fetch schemes from the JSON file
-    async function fetchSchemes() {
-        const response = await fetch('schemes.json'); // Load JSON file
-        const schemes = await response.json();
+<body id="women-schemes-page">
 
-        // Get the selected category
-        const category = document.getElementById("category").value;
+<section class="search-section">
+    <form method="POST">
+        <input type="text" name="query" placeholder="Search for a scheme..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+</section>
 
-        // Filter schemes by category if selected
-        const filteredSchemes = category
-            ? schemes.filter(scheme => scheme.category === category)
-            : schemes;
-
-        // Render the schemes on the page
-        const list = document.getElementById("scheme-list");
-        list.innerHTML = filteredSchemes.map(scheme => `
-            <div class="scheme-card">
-                <h3>${scheme.name}</h3>
-                <p><strong>Category:</strong> ${scheme.category}</p>
-                <p><strong>Eligibility:</strong> ${scheme.eligibility}</p>
-            </div>
-        `).join('');
-    }
-
-    // Load schemes on page load
-    window.onload = fetchSchemes;
-</script>
-</head>
-<body>
-<h1>Government Schemes</h1>
-<label for="category">Filter by Category:</label>
-<select id="category" onchange="fetchSchemes()">
-    <option value="">All</option>
-    <option value="Agriculture">Agriculture</option>
-    <option value="Education">Education</option>
-    <option value="Healthcare">Healthcare</option>
-</select>
-<div id="scheme-list"></div>
-
-
+<section class="results-section">
+    {% if schemes %}
+        <ul>
+            {% for scheme in schemes %}
+                <li>
+                    <h3>{{ scheme.name }}</h3>
+                    <p><strong>Description:</strong> {{ scheme.description }}</p>
+                    <p><strong>Eligibility:</strong> {{ scheme.eligibility }}</p>
+                    {% if scheme.apply_link %}
+                        <p><a href="{{ scheme.apply_link }}" target="_blank">Apply Now</a></p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No schemes found matching your search criteria.</p>
+    {% endif %}
+</section>
 </body>
 {% endblock %}

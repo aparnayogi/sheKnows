@@ -1,15 +1,34 @@
 import json
 import random
 from flask import Flask, flash, jsonify, request, render_template, redirect, session, url_for
-from flask_login import logout_user
+from flask_cors import CORS
+from flask_login import logout_user,login_user,LoginManager, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 import requests
 from bs4 import BeautifulSoup
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 
 app = Flask(__name__)
-app.secret_key = 'my_key' 
+# app.secret_key = 'my_key' 
+
+CORS(app)  # Enable cross-origin requests
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  #Cookie Same site attribute
+app.config['SESSION_COOKIE_SECURE'] = True
+app.secret_key = 'This_is_very_secret'
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+class User(UserMixin):
+    def __init__(self, id):
+        self.id = id
+        
+
+@login_manager.user_loader
+def load_user(user_id ):
+    return User(user_id)
 
 @app.route('/')
 def index():
@@ -39,41 +58,62 @@ def financial_literacy():
 def login():
     return render_template('login.html')
 
+@app.route('/chat')
+def chatbox():
+    return render_template('chat.html')
 
-# def get_logged_in_user():
-#     user_login = False
-#     user_info = session.get('user_name')
-#     if(user_info is not None):
-#         user_logged_in = user_info
-#     else:
-#         user_logged_in = None
-#     if(user_logged_in is not None):
-#         user_login = True
-
-#     return user_login
+@app.route('/result')
+def show_result():
+    query = request.args.get('query') 
+    response = get_advice()  # Call the API endpoint
+    return render_template('result.html', query=query, response=response)
 
 
 
 
-# @app.route('/logout')
-# def logout():
-#     logout_user()
-#     session.clear()
-#     user_login = get_logged_in_user()
-#     return render_template('loginPage.html' , user_login=user_login)
+    # Load the JSON data from the file
+# with open('auth/schemes.json', 'r') as file:
+#     schemes_data = json.load(file)
+#     print("Loaded schemes data:", schemes_data) 
+
+def load_schemes():
+    with open("auth/schemes.json", "r") as file:
+        schemes_data = json.load(file)
+    print("Loaded schemes data:", schemes_data)  # Moved print statement inside function
+    return schemes_data
+
+@app.route("/api/schemes", methods=["GET", "POST"])
+def api_schemes():
+    schemes = load_schemes()
+    query = request.form.get("query", "").lower()
+
+    # Filter schemes based on search query
+    if query:
+        schemes = [scheme for scheme in schemes if query in scheme["name"].lower() or query in scheme["description"].lower()]
+
+    return render_template("schemes.html", schemes=schemes, query=query)
+
+def get_logged_in_user():
+    user_login = False
+    user_info = session.get('user_name')
+    if(user_info is not None):
+        user_logged_in = user_info
+    else:
+        user_logged_in = None
+    if(user_logged_in is not None):
+        user_login = True
+
+    return user_login
+
 
 @app.route('/logout')
 def logout():
+    logout_user()
     session.clear()
-    flash("You have been logged out successfully.", "success")
-    return redirect(url_for('login'))
-# @app.route('/Homepage')
-# def Homepage():
-#     return render_template('home.html')
+    user_login = get_logged_in_user()
+    return render_template('home.html' , user_login=user_login)
 
-# @app.route('/aboutPage')
-# def aboutPage():
-#     return render_template('about.html')
+
 
 def post_api_function(url, data):
     response = ''
@@ -95,6 +135,8 @@ def get_api_function(url):
 
 def get_service_url():
     return 'http://localhost:20000'
+
+
 
 @app.route('/user_signup', methods=['POST'])
 def user_signup():
@@ -121,15 +163,6 @@ def attempt_to_login():
     return response.json()
 
 
-# @app.route('/get-quote')
-# def get_quote():
-#     try:
-#         response = requests.get("https://api.quotable.io/random")  
-#         data = response.json()  # Convert response to JSON format
-#         return jsonify({"quote": data['content'], "author": data['author']})
-#     except Exception as e:
-#         print(f"Error fetching quote: {e}")
-#         return jsonify({"quote": "An error occurred while fetching the quote.", "author": "Unknown"})
 
 # List of quotes
 quotes = [
@@ -193,56 +226,186 @@ def fetch_articles():
 
 
 
-def scrape_schemes():
-    url = "https://www.myscheme.gov.in/search/state/Gujarat"
-    response = requests.get(url)
+# def scrape_schemes():
+#     url = "https://www.myscheme.gov.in/search/state/Gujarat"
+#     response = requests.get(url)
 
-    if response.status_code != 200:
-        print("Failed to fetch the website.")
-        return
+#     if response.status_code != 200:
+#         print("Failed to fetch the website.")
+#         return
 
-    soup = BeautifulSoup(response.text, 'html.parser')
+#     soup = BeautifulSoup(response.text, 'html.parser')
 
-    schemes = []
-    # Locate broader elements
-    for item in soup.find_all('div'):  # Replace 'div' with a more specific tag if possible
-        name = item.find('h3')  # Look for headings inside the div
-        category = item.find('p', text=lambda x: 'Category:' in x if x else False)
-        eligibility = item.find('p', text=lambda x: 'Eligibility:' in x if x else False)
+#     schemes = []
+#     # Locate broader elements
+#     for item in soup.find_all('div'):  # Replace 'div' with a more specific tag if possible
+#         name = item.find('h3')  # Look for headings inside the div
+#         category = item.find('p', text=lambda x: 'Category:' in x if x else False)
+#         eligibility = item.find('p', text=lambda x: 'Eligibility:' in x if x else False)
 
-        if name:  # Ensure no null values
-            schemes.append({
-                "name": name.text.strip(),
-                "category": category.text.strip() if category else "N/A",
-                "eligibility": eligibility.text.strip() if eligibility else "N/A"
-            })
+#         if name:  # Ensure no null values
+#             schemes.append({
+#                 "name": name.text.strip(),
+#                 "category": category.text.strip() if category else "N/A",
+#                 "eligibility": eligibility.text.strip() if eligibility else "N/A"
+#             })
 
-    # Save the data to a JSON file
-    with open('schemes.json', 'w') as file:
-        json.dump(schemes, file, indent=4)
+#     # Save the data to a JSON file
+#     with open('schemes.json', 'w') as file:
+#         json.dump(schemes, file, indent=4)
 
-if __name__ == "__main__":
-    scrape_schemes()
-    print("Data saved to schemes.json!")
-
-
-import requests
-from bs4 import BeautifulSoup
-
-# Step 1: Fetch the website content
-url = "https://www.myscheme.gov.in/search/state/Gujarat"
-response = requests.get(url)
-
-if response.status_code != 200:
-    print("Failed to fetch the website.")
-else:
-    # Step 2: Parse the HTML
-    soup = BeautifulSoup(response.text, 'html.parser')
-
-    # Step 3: Debug the HTML content
-    print(soup.prettify())  # This prints the entire HTML content in a readable format
+# if __name__ == "__main__":
+#     scrape_schemes()
+#     print("Data saved to schemes.json!")
 
 
+# import requests
+# from bs4 import BeautifulSoup
+
+# # Step 1: Fetch the website content
+# url = "https://www.myscheme.gov.in/search/state/Gujarat"
+# response = requests.get(url)
+
+# if response.status_code != 200:
+#     print("Failed to fetch the website.")
+# else:
+#     # Step 2: Parse the HTML
+#     soup = BeautifulSoup(response.text, 'html.parser')
+
+#     # Step 3: Debug the HTML content
+#     print(soup.prettify())  # This prints the entire HTML content in a readable format
+
+NEWS_API_KEY = '2515d7423baa4da4bd9f7956508cf0e5'  # Replace with your NewsAPI key # Replace with your NewsAPI key
+NEWS_API_URL = 'https://newsapi.org/v2/everything'
+
+@app.route('/news/women', methods=['GET'])
+def get_indian_news():
+    try:
+        params = {
+            'q': 'women',
+            'language': 'en',
+            'sortBy': 'publishedAt',
+            'apiKey': NEWS_API_KEY,
+            'domains': 'ndtv.com,indiatoday.in,hindustantimes.com,indianexpress.com'  # Specific Indian news sources
+        }
+        response = requests.get(NEWS_API_URL, params=params)
+        response.raise_for_status()
+        news_data = response.json()
+        return jsonify(news_data['articles'])
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+
+legal_advice = {
+    "domestic_violence": {
+        "rights": [
+            "Right to live in a safe environment free from violence.",
+            "Right to protection under the Domestic Violence Act, 2005.",
+            "Right to seek police assistance and legal remedies.",
+        ],
+        "advice": [
+            "Keep a record of incidents of violence.",
+            "Seek immediate medical attention if injured.",
+            "Contact a women's helpline or a lawyer specializing in domestic violence.",
+            "Consider filing a police complaint.",
+        ]
+    },
+    "sexual_harassment": {
+        "rights": [
+            "Right to a workplace free from sexual harassment.",
+            "Right to file a complaint under the Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013.",
+            "Right to seek legal remedies.",
+        ],
+        "advice": [
+            "Report the incident to your HR department or a designated internal complaints committee.",
+            "Gather evidence such as emails, messages, or witness testimonies.",
+            "Consult with a lawyer specializing in sexual harassment.",
+        ]
+    },
+    "property_rights": {
+        "rights": [
+            "Right to inherit property equally with male heirs.",
+            "Right to own and manage property independently.",
+        ],
+        "advice": [
+            "Consult with a legal professional to understand your property rights.",
+            "Ensure your name is included in property documents.",
+            "Be aware of your rights under the Hindu Succession Act and other relevant laws.",
+        ]
+    },
+    "divorce": {
+        "rights": [
+            "Right to file for divorce under various grounds.",
+            "Right to alimony and child custody.",
+        ],
+        "advice": [
+            "Consult with a family lawyer to understand your options.",
+            "Gather necessary documentation such as marriage certificate and financial records.",
+            "Explore mediation and counseling options before proceeding with legal action.",
+        ]
+    }
+}
+
+@app.route('/chat', methods=['POST'])
+def get_advice():
+    """
+    Endpoint to get legal advice based on the user's query.
+
+    Args:
+        query: The user's query describing their legal issue.
+
+    Returns:
+        JSON response containing relevant rights and advice.
+    """
+    data = request.get_json()
+    query = data.get('query')
+
+    # Simple keyword matching (replace with more sophisticated NLP techniques)
+    best_match = None
+    for issue, info in legal_advice.items():
+        if issue in query.lower():
+            best_match = issue
+            break
+
+    if best_match:
+        return jsonify({
+            "issue": best_match,
+            "rights": legal_advice[best_match]["rights"],
+            "advice": legal_advice[best_match]["advice"]
+        })
+    else:
+        return jsonify({
+            "message": "Sorry, I couldn't find relevant information for your query."
+        }), 404
+
+
+
+@app.route('/api/data', methods=['POST'])
+def receive_data():
+    if request.headers['Content-Type'] == 'application/json':
+        try:
+            data = request.get_json()
+            # Process the JSON data here
+            result = process_data(data)  # Example: process_data function
+            return jsonify({'message': 'Data received successfully', 'result': result}), 200
+        except Exception as e:
+            return jsonify({'error': f'Error processing JSON data: {e}'}), 400
+    else:
+        return jsonify({'error': 'Unsupported Media Type'}), 415
+
+def process_data(data):
+    # Example: Process the received JSON data
+    # Here you would perform the desired operations 
+    # on the 'data' dictionary
+    
+    # For example, sum the values of a list:
+    if 'numbers' in data:
+        return sum(data['numbers']) 
+    
+    # Return a default value or handle other cases as needed
+    return "No specific processing defined"
 
 if __name__ == '__main__':
     app.run(debug=True)

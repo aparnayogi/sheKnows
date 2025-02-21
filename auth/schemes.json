@@ -1,32 +1,116 @@
 [
     {
-        "name": "Are you sure you want to sign out?",
-        "category": "N/A",
-        "eligibility": "N/A"
+        "name": "Mahila Samman Savings Certificate",
+        "description": "A savings scheme offering a fixed return of 7.5% per annum to women for a two-year tenure.",
+        "eligibility": "Open to all women; minimum deposit of ₹1,000 and maximum of ₹2 lakh.",
+        "apply_link": "https://www.myscheme.gov.in/schemes/mssc"
     },
     {
-        "name": "Are you sure you want to sign out?",
-        "category": "N/A",
-        "eligibility": "N/A"
+        "name": "Beti Bachao Beti Padhao (BBBP)",
+        "description": "Promotes survival, protection, and education of the girl child.",
+        "eligibility": "Open to families with girl children.",
+        "apply_link": "https://www.myscheme.gov.in/schemes/bbbp"
     },
     {
-        "name": "Are you sure you want to sign out?",
-        "category": "N/A",
-        "eligibility": "N/A"
+        "name": "Pradhan Mantri Matru Vandana Yojana (PMMVY)",
+        "description": "Provides cash incentives for pregnant women and lactating mothers.",
+        "eligibility": "First-time mothers; excludes government employees.",
+        "apply_link": "https://wcd.delhi.gov.in/wcd/pradhan-mantri-matru-vandana-yojana-pmmvy"
     },
     {
-        "name": "Are you sure you want to sign out?",
-        "category": "N/A",
-        "eligibility": "N/A"
+        "name": "One Stop Centre Scheme",
+        "description": "Provides support to women affected by violence, offering legal, medical, and psychological aid.",
+        "eligibility": "Women facing violence in any form.",
+        "apply_link": "https://www.myscheme.gov.in/schemes/osc"
     },
     {
-        "name": "Are you sure you want to sign out?",
-        "category": "N/A",
-        "eligibility": "N/A"
+        "name": "Mahila E-Haat",
+        "description": "Online platform supporting women entrepreneurs, SHGs, and NGOs in showcasing their products.",
+        "eligibility": "Women entrepreneurs, SHGs, and NGOs.",
+        "apply_link": "https://mahilaehaat.gov.in"
     },
     {
-        "name": "Are you sure you want to sign out?",
-        "category": "N/A",
-        "eligibility": "N/A"
+        "name": "Working Women Hostel",
+        "description": "Ensures safe and affordable accommodation for working women.",
+        "eligibility": "Working women, women undergoing training, and economically weaker sections.",
+        "apply_link": "https://wcd.nic.in/schemes/working-women-hostel"
+    },
+    {
+        "name": "Ujjawala Scheme",
+        "description": "Focuses on prevention, rescue, rehabilitation, and reintegration of trafficking victims.",
+        "eligibility": "Victims of trafficking for sexual exploitation.",
+        "apply_link": "https://wcd.nic.in/schemes/ujjawala-comprehensive-scheme-prevention-trafficking-and-rescue-rehabilitation-and-re"
+    },
+    {
+        "name": "Sukanya Samriddhi Yojana (SSY)",
+        "description": "Savings scheme for the education and marriage expenses of a girl child.",
+        "eligibility": "Parents or guardians of a girl child below 10 years.",
+        "apply_link": "https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Savings-Schemes.aspx"
+    },
+    {
+        "name": "National Creche Scheme",
+        "description": "Provides daycare facilities to working mothers for children under six years of age.",
+        "eligibility": "Working mothers with young children.",
+        "apply_link": "https://wcd.nic.in/schemes/national-creche-scheme"
+    },
+    {
+        "name": "STEP Scheme",
+        "description": "Skill development program to enhance employability of women.",
+        "eligibility": "Unemployed women aged 16 years and above.",
+        "apply_link": "https://wcd.nic.in/schemes/support-training-and-employment-programme-women-step"
+    },
+    {
+        "name": "Nirbhaya Fund",
+        "description": "Dedicated to enhancing the safety and security of women in India.",
+        "eligibility": "Projects aimed at improving women's safety.",
+        "apply_link": "https://wcd.nic.in/schemes/nirbhaya"
+    },
+    {
+        "name": "Swadhar Greh Scheme",
+        "description": "Provides shelter, food, clothing, and care to women in distress.",
+        "eligibility": "Women in difficult circumstances.",
+        "apply_link": "https://wcd.nic.in/schemes/swadhar-greh-scheme"
+    },
+    {
+        "name": "Janani Suraksha Yojana (JSY)",
+        "description": "Encourages institutional deliveries by providing cash incentives to pregnant women.",
+        "eligibility": "Pregnant women in rural and urban areas below the poverty line.",
+        "apply_link": "https://nhm.gov.in/index1.php?lang=1&level=3&sublinkid=841&lid=309"
+    },
+    {
+        "name": "National Rural Livelihood Mission (NRLM)",
+        "description": "Promotes self-employment and entrepreneurship among women in rural areas.",
+        "eligibility": "Women in rural Self-Help Groups (SHGs).",
+        "apply_link": "https://aajeevika.gov.in"
+    },
+    {
+        "name": "Rajiv Gandhi Scheme for Empowerment of Adolescent Girls (SABLA)",
+        "description": "Improves the nutritional and health status of adolescent girls.",
+        "eligibility": "Girls aged 11-18 years.",
+        "apply_link": "https://wcd.nic.in/schemes/sabla-rajiv-gandhi-scheme-empowerment-adolescent-girls"
+    },
+    {
+        "name": "Dhanalakshmi Scheme",
+        "description": "Provides financial incentives to families for the education of girl children.",
+        "eligibility": "Families below the poverty line with girl children.",
+        "apply_link": "https://wcd.nic.in/schemes/dhanalakshmi"
+    },
+    {
+        "name": "Kasturba Gandhi Balika Vidyalaya (KGBV)",
+        "description": "Promotes education among girls belonging to disadvantaged groups.",
+        "eligibility": "Girls from SC/ST, OBC, and minority communities.",
+        "apply_link": "https://samagra.education.gov.in/kgbv.aspx"
+    },
+    {
+        "name": "Indira Gandhi National Old Age Pension Scheme",
+        "description": "Provides pensions to elderly women in poverty.",
+        "eligibility": "Women aged 60 years and above, living below the poverty line.",
+        "apply_link": "https://nsap.nic.in"
+    },
+    {
+        "name": "Priyadarshini Scheme",
+        "description": "Empowers rural women by creating sustainable livelihood opportunities.",
+        "eligibility": "Rural women in specific regions.",
+        "apply_link": "https://www.nabard.org"
     }
 ]
