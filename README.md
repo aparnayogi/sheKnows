@@ -1,12 +1,12 @@
 # SheKnows - Women's Empowerment Platform 💪🌍
 
-SheKnows is an AI-driven platform designed to empower women by providing easy access to **legal rights, financial literacy, government schemes, and mental health resources**. The platform integrates **AI-powered chat assistance**, a **resource hub**, and **real-time updates** to support women in making informed decisions.
+SheKnows is an platform designed to empower women by providing easy access to **legal rights, financial literacy, government schemes, and mental health resources**. The platform integrates **AI-powered chat assistance**, a **resource hub**, and **real-time updates** to support women in making informed decisions.
 
 ## 🚀 Features  
 
 - **AI Chatbot Assistance 🤖** – Provides instant responses to queries about legal rights, government support, and financial literacy.  
-- **Resource Hub 📚** – Curated information on business development, financial independence, and available policies.  
-- **Real-Time Updates 🔄** – Live data integration with government portals for latest schemes and benefits.  
+- **Resource Hub 📚** – Curated information on financial independence, and available policies.  
+- **Real-Time Updates 🔄** – data integration with government portals for latest schemes and benefits.  
 - **Secure User Authentication 🔒** – Ensures safe and personalized access.  
 - **User-Friendly Interface 🎨** – Mobile-responsive UI built with Bootstrap & jQuery for seamless navigation.  
 
@@ -25,8 +25,7 @@ SheKnows follows a **three-tier architecture**:
    - Manages data processing and connects to government APIs.  
 
 3️⃣ **Database Layer**  
-   - Uses **PostgreSQL** for structured and secure data storage.  
-   - Ensures **efficient retrieval and role-based access control (RBAC)**.  
+   - Uses **PostgreSQL** for structured and secure data storage.  .  
 
 ---
 
